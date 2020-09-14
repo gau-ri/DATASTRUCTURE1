@@ -1,122 +1,142 @@
+//paranthesis matching
 #include<iostream>
+#include<string.h>
 using namespace std;
 class stack
 {
-	public:
-	int top;
-	int *arr;
-	int size;
-	stack(int size);
-	~stack();
-	void display();
-	void push(int x);
-	void pop();
-//	int top();
-	void overflow();
-	void underflow();
-	void peek(int pos);
+    public:
+    int top;
+    int size;
+    char *arr;
+    stack(int size);
+    ~stack();
+    void push(int x);
+    int pop();
+    int isfull();
+    int isempty();
+    int peek(int x);
+    void display();
 };
 stack::stack(int size)
 {
     this->size=size;
-	top=-1;
-	arr=new int[size];
-	
+    arr=new char[size];
+    top=-1;
 }
 stack::~stack()
 {
-	delete []arr;
+    delete []arr;
 }
 void stack::push(int x)
 {
-	if(top==size-1)
-	{
-		cout<<"overflow";
-	}
-	else
-	{
-		top++;
-		arr[top]=x;
-	}
+    if(top==size-1)
+    {
+        cout<<"stack full";
+    }
+    else
+    {
+        top++;
+        arr[top]=x;
+        
+    }
+}
+int stack::pop()
+{
+    int x=1;
+    if(top==-1)
+    {
+        return -1;
+    }
+    else
+    {
+        x=arr[top];
+        top--;
+        
+    }
+    return x;
+}
+int stack::isfull()
+{
+    if(top==size-1)
+    {
+        return 1;
+    }    
+    else
+    {
+        return 0;
+    }
+}
+int stack::isempty()
+{
+    if(top==-1)
+    {
+        return 1;
+    }
+        return 0;
+}
+int stack::peek(int pos)
+{
+    int x;
+    if(top-pos+1<0||top-pos+1==size)
+    {
+        cout<<"invalid pos";
+    }
+    else
+    
+    {
+        x=arr[top-pos+1];
+    }
+    return x;
 }
 void stack::display()
 {
-	for(int i=0;i<size;i++)
-	{
-		cout<<arr[i]<<endl;
-	}
+    for(int i=top;i>=0;i--)
+    {
+        cout<<arr[i]<<"-";
+    }
 }
-void stack:: pop()
-{
-	int x=-1;
-	if(top==-1)
-	{
-	cout<<"-1";
-	}
-	else
-	{
-		x=arr[top];
-		top--;
-	}
-	cout<<x;
+bool isBalanced(char* exp){
+ 
+    // Create a stac
+     stack s((int)strlen(exp));
+ 
+ 
+    // Process expression
+    for (int i=0; i<strlen(exp); i++){
+ 
+        // ( found: Push to stack
+        if (exp[i] == '('){
+            s.push(exp[i]);
+ 
+            // ( found
+        } else if (exp[i] == ')'){
+ 
+            // ) and stack is empty: Unbalanced expression
+            if (s.isempty()){
+                return false;
+ 
+                // ) and stack is not empty
+            } else {
+                s.pop();
+            }
+        }
+    }
+ 
+    // If stack is empty then balanced else unbalanced
+    return s.isempty() ? true : false;
+ 
 }
-void stack::overflow()
-{
-	if(top==size-1)
-	{
-		cout<<"full";
-	}
-	else
-	{
-		cout<<"not full";
-	}
-}
-void stack::underflow()
-{
-	if(top==-1)
-	{
-		cout<<"empty";
-	}
-	else
-	{
-		cout<<"not empty";
-	}
-}
-void stack:: peek(int pos)
-{
-	int x=0;
-	if(pos>0 && pos<size-1)
-	{
-		x=arr[top-pos+1];
-	}
-	    cout<<x;
-}
-
 int main()
 {
-	stack s(5);
-	s.push(1);
-		s.push(2);
-			s.push(3);
-				s.push(4);
-				s.push(5);
-				s.display();
-				s.peek(2);
-				cout<<endl;
-				s.peek(0);
-				s.pop();
-				cout<<endl;
-				s.pop();
-				cout<<endl;
-				s.overflow();
-				cout<<endl;
-				s.pop();
-				s.pop();
-				s.pop();
-				s.pop();
-				s.pop();
-				s.pop();
-				s.underflow();
-				
-			
+     char E[] = "((a+b)*(c-d))";
+    cout << isBalanced(E) << endl;
+ 
+    char F[] = "((a+b)*(c-d)))";
+    cout << isBalanced(F) << endl;
+ 
+    char G[] = "(((a+b)*(c-d))";
+    cout << isBalanced(G) << endl;
+    return 0;
+    
+    
 }
