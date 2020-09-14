@@ -39,6 +39,7 @@ class linked
         void searchfor(int n);
         void ifpalindrome(int size);
         void movefirst();
+        void evenodd(int size);
 };
 linked::linked(int arr[],int size)
 {
@@ -365,9 +366,37 @@ void linked::movefirst()
 		first=p;
 	}
 }
+void linked::evenodd(int size)
+{
+
+node *p=first;
+int *a=new int[size];
+int i=0;
+while(p!=NULL)
+{
+	if(p->data%2==0)
+	{
+		a[i]=p->data;
+		i++;
+		p=p->next;
+	}
+	else
+	{
+		p=p->next;
+	}
+	p=first;
+	i++;
+	while(p!=NULL)
+	{
+		p->data=a[i++];
+		p=p->next;
+	}
+}
+}
 int main()
 {
-    int arr[]={1,2,2,4,5,6};
+    int arr[]={1,2,3,4,5,6,7};
+   
     linked l(arr,6);
     l.dis();
     cout<<endl;
@@ -391,6 +420,9 @@ int main()
    l.dis();
    cout<<"swapped: ";
     l.movefirst();
+   l.dis();
+   l.evenodd(6);
+cout<<endl;
    l.dis();
 }
 
