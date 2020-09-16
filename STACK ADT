@@ -10,11 +10,13 @@ class stack
 	~stack();
 	void display();
 	void push(int x);
-	void pop();
+	intpop();
 //	int top();
 	void overflow();
 	void underflow();
 	void peek(int pos);
+	void revdis();
+	void reverse();
 };
 stack::stack(int size)
 {
@@ -46,7 +48,7 @@ void stack::display()
 		cout<<arr[i]<<endl;
 	}
 }
-void stack:: pop()
+int stack:: pop()
 {
 	int x=-1;
 	if(top==-1)
@@ -58,7 +60,7 @@ void stack:: pop()
 		x=arr[top];
 		top--;
 	}
-	cout<<x;
+	return x;
 }
 void stack::overflow()
 {
@@ -91,7 +93,29 @@ void stack:: peek(int pos)
 	}
 	    cout<<x;
 }
-
+void stack::revdis()
+{
+    for(int i=size;i>0;i--)
+    {
+        cout<<arr[i];
+    }
+}
+void stack::reverse()
+{
+    int *a=new int[size];
+    int i=0;
+    while(top==-1)
+    {
+        arr[i]=pop();
+        i++;
+    }
+    for(i=0;i<size;i++)
+    {
+        push(arr[i]);
+    }
+    
+    
+}
 int main()
 {
 	stack s(5);
@@ -100,7 +124,10 @@ int main()
 			s.push(3);
 				s.push(4);
 				s.push(5);
+					cout<<"reverse"<<endl;
+				s.revdis();
 				s.display();
+				
 				s.peek(2);
 				cout<<endl;
 				s.peek(0);
@@ -117,6 +144,12 @@ int main()
 				s.pop();
 				s.pop();
 				s.underflow();
+			//reverse9 a stack;
+			s.reverse();
+			cout<<"---";
+			cout<<"stack reversing"<<endl;
+			s.display();
+			
 				
 			
 }
